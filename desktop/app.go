@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"log"
 	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
@@ -277,6 +278,12 @@ func (a *App) startup(ctx context.Context) {
 		a.metrics.Store(newMetricsAggregator(filepath.Dir(config.UserConfigPath())))
 	}
 
+	// Extract embedded skills on first launch
+	go func() {
+		if err := extractEmbeddedSkills(); err != nil {
+			log.Printf("extract embedded skills: %v", err)
+		}
+	}()
 	go a.restoreOrBuildTabs()
 	a.goSafe("refreshBotRuntime", a.refreshBotRuntime)
 	a.goSafe("sendStartupPing", a.sendStartupPing)
@@ -4653,4 +4660,21 @@ func (a *App) ConnectVisionKey(apiKey string) error {
 		return fmt.Errorf("save vision key: %w", err)
 	}
 	return nil
+}
+
+// extractEmbeddedSkills writes the bundled skills to the user's config directory
+// on first launch and registers the path in config so they are auto-discovered.
+func extractEmbeddedSkills() error {
+	dest := filepath.Join(filepath.Dir(config.UserConfigPath()), "skills")
+	if _, err := os.Stat(dest); err == nil {
+		return nil
+	}
+	if err := os.CopyFS(dest, embeddedSkillsFS); err != nil {
+		return err
+	}
+	cfg, err := config.Load()
+	if err != nil {
+		return err
+	}
+	return cfg.AddSkillPath(dest)
 }

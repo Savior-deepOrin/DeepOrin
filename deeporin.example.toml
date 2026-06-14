@@ -128,8 +128,8 @@ bash_timeout_seconds = 120   # foreground safety cap; set 0 for no tool-local ca
 # and the same dirs under ~ (global). Built-ins (explore/research/review/security-review/test)
 # ship out of the box. The model invokes them via run_skill / explore / …; you
 # invoke them via /<name>. Manage with /skill (list, show, enable, disable, new, paths).
-# [skills]
-# paths = ["~/my-skills", "../shared/skills"]   # extra "custom"-scope skill roots
+[skills]
+paths = ["<USER_CONFIG>/skills"]   # built-in skills bundled with deepOrin
 # excluded_paths = ["~/.agents/skills"]         # hide convention roots without deleting folders
 # disabled_skills = ["review"]                  # hide from prompt, slash invocation, and skill tools
 
