@@ -147,18 +147,6 @@ commands, `@` references, and two-model setup are all in the
 
 <br/>
 
-## Support
-
-If deepOrin has been useful and you'd like to say thanks, you can. It stays a coffee, not a contract — donations don't buy feature priority or change how issues get triaged.
-
-- **International** — PayPal: [paypal.me/yuhuahui](https://paypal.me/yuhuahui)
-- **国内** — 微信支付（扫码）
-
-<p align="center">
-  <img src=".github/sponsor/wechat-pay.jpg" alt="WeChat Pay QR code" width="240"/>
-</p>
-
-<br/>
 
 ## Acknowledgments
 
