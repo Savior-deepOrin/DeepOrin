@@ -1,0 +1,39 @@
+{
+  "name": "deeporin",
+  "version": "0.0.0",
+  "description": "Cache-first AI coding agent for the terminal.",
+  "bin": {
+    "deeporin": "bin/deeporin.js"
+  },
+  "files": [
+    "bin/deeporin.js"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Savior-deepOrin/deeporin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Savior-deepOrin/deeporin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Savior-deepOrin/deeporin/issues"
+  },
+  "keywords": [
+    "deepseek",
+    "ai",
+    "agent",
+    "cli",
+    "coding-assistant",
+    "tui"
+  ],
+  "optionalDependencies": {
+    "@deeporin/cli-darwin-arm64": "0.0.0",
+    "@deeporin/cli-darwin-x64": "0.0.0",
+    "@deeporin/cli-linux-arm64": "0.0.0",
+    "@deeporin/cli-linux-x64": "0.0.0",
+    "@deeporin/cli-win32-arm64": "0.0.0",
+    "@deeporin/cli-win32-x64": "0.0.0"
+  }
+}

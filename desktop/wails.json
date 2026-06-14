@@ -1,0 +1,19 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "deeporin-desktop",
+  "outputfilename": "deeporin-desktop",
+  "frontend:install": "pnpm install",
+  "frontend:build": "pnpm build",
+  "frontend:dev:watcher": "pnpm dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Savior-deepOrin"
+  },
+  "info": {
+    "companyName": "deepOrin",
+    "productName": "deepOrin",
+    "productVersion": "0.0.0",
+    "copyright": "Copyright © 2026 deepOrin Contributors",
+    "comments": "deepOrin desktop — a Wails shell around the Go kernel."
+  }
+}
