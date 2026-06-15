@@ -17,8 +17,7 @@
 </p>
 
 > [!IMPORTANT]
-> **deepOrin 1.0 is a ground-up rewrite in Go** — this branch (`main-v2`) is the new default and where development happens now.
-> The earlier `0.x` TypeScript releases are **legacy**, living on the [`v1`](https://github.com/Savior-deepOrin/deeporin/tree/v1) branch (maintenance only).
+> **deepOrin 1.0 is a ground-up rewrite in Go** 
 > See the **[migration guide](./docs/MIGRATING.md)**. `npm i -g deeporin` stays the install command — `1.0.0`+ delivers the Go binary, `0.x` is the legacy TS build.
 
 <p align="center">
