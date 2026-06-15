@@ -41,8 +41,8 @@
 
 <br/>
 
-<h3 align="center">A DeepSeek-native AI coding agent for your terminal.</h3>
-<p align="center">A config- and plugin-driven harness or desktop — a single static Go binary, tuned around DeepSeek's prefix cache so token costs stay low across long sessions.</p>
+<h3 align="center">A DeepSeek-native AI coding agent for your terminal or desktop.</h3>
+<p align="center">A config- and plugin-driven harness  — a single static Go binary, tuned around DeepSeek's prefix cache so token costs stay low across long sessions.</p>
 
 <br/>
 
