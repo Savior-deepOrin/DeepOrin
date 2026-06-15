@@ -18,7 +18,7 @@
 
 > [!IMPORTANT]
 > **deepOrin 1.0 is a ground-up rewrite in Go** 
-> See the **[migration guide](./docs/MIGRATING.md)**. `npm i -g deeporin` stays the install command — `1.0.0`+ delivers the Go binary, `0.x` is the legacy TS build.
+> `npm i -g deeporin` stays the install command — `1.0.0`+ delivers the Go binary, `0.x` is the legacy TS build.
 
 <p align="center">
   <a href="https://www.npmjs.com/package/deeporin"><img src="https://img.shields.io/npm/v/deeporin.svg?style=flat-square&color=cb3837&labelColor=161b22&logo=npm&logoColor=white" alt="npm version"/></a>
