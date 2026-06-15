@@ -8,6 +8,7 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 gsap.registerPlugin(useGSAP, Flip, ScrollToPlugin);
 import {
   Activity,
+  Code2,
   Command,
   Download,
   SquarePen,
@@ -130,6 +131,7 @@ const RIGHT_DOCK_MIN_RENDER_WIDTH = 280;
 const RIGHT_DOCK_MAX_WIDTH = 860;
 
 type RightDockMode = "context" | "files" | "changed";
+type AppMode = "code" | "write";
 type WorkspaceRevealRequest = { id: number; path: string };
 type WorkspaceFileListRequest = { id: number; paths: string[] };
 type WorkspaceChangeListEntry = { key: string; path: string; meta: string; time: string; detail: string };
@@ -823,6 +825,7 @@ export default function App() {
   const [workspacePanelResizing, setWorkspacePanelResizing] = useState(false);
   const [workspacePanelMaximized, setWorkspacePanelMaximized] = useState(false);
   const [rightDockMode, setRightDockMode] = useState<RightDockMode>("context");
+  const [appMode, setAppMode] = useState<AppMode>("code");
   const [workspaceRevealRequest, setWorkspaceRevealRequest] = useState<WorkspaceRevealRequest | null>(null);
   const [workspaceChangeRevealRequest, setWorkspaceChangeRevealRequest] = useState<WorkspaceRevealRequest | null>(null);
   const [workspaceFileListRequest, setWorkspaceFileListRequest] = useState<WorkspaceFileListRequest | null>(null);
@@ -2379,6 +2382,27 @@ export default function App() {
             <SquarePen size={18} />
             <span>{t("topbar.newSession")}</span>
           </button>
+
+          <div className="sidebar__mode-switch">
+            <button
+              type="button"
+              className={`sidebar__mode-btn${appMode === "code" ? " sidebar__mode-btn--active" : ""}`}
+              onClick={() => setAppMode("code")}
+            >
+              <Code2 size={15} />
+              <span>Code</span>
+            </button>
+            <button
+              type="button"
+              className={`sidebar__mode-btn${appMode === "write" ? " sidebar__mode-btn--active" : ""}`}
+              onClick={() => setAppMode("write")}
+            >
+              <FileText size={15} />
+              <span>Write</span>
+            </button>
+          </div>
+
+          
 
           <section className="sidebar__section sidebar__section--projects">
             <ProjectTree

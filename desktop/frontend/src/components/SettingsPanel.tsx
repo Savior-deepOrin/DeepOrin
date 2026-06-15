@@ -162,12 +162,12 @@ export function SettingsPanel({
                       fontFamily={fontFamily}
                       customFontName={customFontName}
                       onTheme={(nextTheme) => {
-                        applyTheme(nextTheme, themeStyle, { persist: false });
+                        applyTheme(nextTheme, themeStyle, { persist: true });
                         setThemeState(nextTheme);
                         void apply(() => app.SetDesktopAppearance(nextTheme, themeStyle));
                       }}
                       onThemeStyle={(style) => {
-                        applyTheme(theme, style, { persist: false });
+                        applyTheme(theme, style, { persist: true });
                         setThemeStyleState(style);
                         void apply(() => app.SetDesktopAppearance(theme, style));
                       }}
@@ -4304,6 +4304,7 @@ const THEME_STYLE_META: Record<ThemeStyle, { name: string; zh: DictKey; note: Di
   carbon: { name: "Carbon", zh: "settings.style.carbon.zh", note: "settings.style.carbon.note", desc: "settings.style.carbon.desc" },
   nocturne: { name: "Nocturne", zh: "settings.style.nocturne.zh", note: "settings.style.nocturne.note", desc: "settings.style.nocturne.desc" },
   amber: { name: "Amber", zh: "settings.style.amber.zh", note: "settings.style.amber.note", desc: "settings.style.amber.desc" },
+  cyber: { name: "Cyber", zh: "settings.style.cyber.zh", note: "settings.style.cyber.note", desc: "settings.style.cyber.desc" },
 };
 
 function AppearanceSection({

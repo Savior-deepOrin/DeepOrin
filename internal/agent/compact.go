@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"sort"
 	"path/filepath"
 	"strings"
 	"time"
@@ -563,6 +564,28 @@ func mechanicalFoldDigest(n int, archive string) string {
 }
 
 // renderTranscript flattens messages into a readable transcript for summarization.
+
+// summarizeToolArgs returns a short summary of tool-call arguments instead of
+// the full JSON, preventing the summarizer from reproducing long argument text
+// (like sub-agent task prompts) in the compaction summary (#4317).
+func summarizeToolArgs(args string) string {
+	if args == "" {
+		return "(no arguments)"
+	}
+	var parsed map[string]any
+	if err := json.Unmarshal([]byte(args), &parsed); err != nil {
+		return fmt.Sprintf("(%d bytes)", len(args))
+	}
+	keys := make([]string, 0, len(parsed))
+	for k := range parsed {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	if len(keys) == 0 {
+		return "(no arguments)"
+	}
+	return fmt.Sprintf("(%s)", strings.Join(keys, ", "))
+}
 func renderTranscript(msgs []provider.Message) string {
 	var b strings.Builder
 	for _, m := range msgs {

@@ -48,7 +48,7 @@ const COMPOSER_AUTO_RESERVED_HEIGHT = 58;
 // Grace after compositionend to swallow a confirm-Enter that lands just after
 // it; the real gap is a few ms, so keep it short or a deliberate quick second
 // Enter (submit) gets eaten too.
-const IME_CONFIRM_GRACE_MS = 100;
+const IME_CONFIRM_GRACE_MS = 250;
 
 type PastedBlock = {
   label: string;
@@ -1357,7 +1357,10 @@ export function Composer({
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     const composing = isImeKeyEvent(e, composingRef.current, lastCompositionEndAt.current);
-    if (e.key === "Enter" && composing) return;
+    if (e.key === "Enter" && composing) {
+      e.preventDefault();
+      return;
+    }
 
     if (isPasteShortcut(e) && !composing) {
       clearNativeClipboardPasteTimer();

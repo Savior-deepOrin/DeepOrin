@@ -24,6 +24,7 @@ export const THEME_STYLES = [
   "carbon",
   "nocturne",
   "amber",
+  "cyber",
 ] as const;
 
 export type ThemeStyle = (typeof THEME_STYLES)[number];
@@ -39,15 +40,34 @@ const LEGACY_STYLE_MAP: Record<string, ThemeStyle> = {
   glacier: "slate",
 };
 
+
+function readSavedTheme(): Theme {
+  if (typeof localStorage === "undefined") return DEFAULT_THEME;
+  try {
+    const raw = localStorage.getItem(THEME_KEY);
+    if (!raw) return DEFAULT_THEME;
+    return normalizeThemePreference(JSON.parse(raw));
+  } catch { return DEFAULT_THEME; }
+}
+function readSavedStyle(): ThemeStyle {
+  if (typeof localStorage === "undefined") return DEFAULT_THEME_STYLE;
+  try {
+    const raw = localStorage.getItem(STYLE_KEY);
+    if (!raw) return DEFAULT_THEME_STYLE;
+    const parsed = JSON.parse(raw);
+    return isThemeStyle(parsed) ? parsed : DEFAULT_THEME_STYLE;
+  } catch { return DEFAULT_THEME_STYLE; }
+}
 const DEFAULT_THEME_STYLE: ThemeStyle = "graphite";
 const DEFAULT_THEME: Theme = "light";
 
 const THEME_KEY = "deeporin-theme";
 const STYLE_KEY = "deeporin-theme-style";
-let currentTheme: Theme = DEFAULT_THEME;
-let currentThemeStyle: ThemeStyle = DEFAULT_THEME_STYLE;
+let currentTheme: Theme = readSavedTheme();
+let currentThemeStyle: ThemeStyle = readSavedStyle();
 
 export function normalizeThemePreference(value: unknown): Theme {
+
   if (typeof value === "object" && value !== null) {
     return normalizeThemePreference((value as { mode?: unknown }).mode);
   }
@@ -128,7 +148,12 @@ export function applyTheme(theme: Theme, style: ThemeStyle = getThemeStyle(theme
     }
   }
 
-  void options;
+  if (options.persist && typeof localStorage !== "undefined") {
+    try {
+      localStorage.setItem(THEME_KEY, JSON.stringify(theme));
+      localStorage.setItem(STYLE_KEY, JSON.stringify(nextStyle));
+    } catch { /* quota exceeded, ignore */ }
+  }
 }
 
 export function readLegacyThemePreference(): { theme: Theme; style: ThemeStyle; hasValue: boolean } {

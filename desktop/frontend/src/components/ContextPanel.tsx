@@ -233,9 +233,6 @@ export function ContextPanel({
     ? Math.round((cacheHitTokens / (cacheHitTokens + cacheMissTokens)) * 100)
     : 0;
   const breakdown = contextBreakdown(usedTokens, windowTokens, promptTokens, completionTokens, reasoningTokens);
-  const donutStyle = {
-    background: `conic-gradient(#13a7a5 0 ${breakdown.promptPct}%, #2f6df6 ${breakdown.promptPct}% ${breakdown.completionPct}%, #f97316 ${breakdown.completionPct}% ${breakdown.reasoningPct}%, var(--border) ${breakdown.reasoningPct}% ${breakdown.otherPct}%, var(--border-soft) ${breakdown.otherPct}% 100%)`,
-  };
   const eventTimes = [
     ...readFiles.map((file) => file.time),
     ...changedFiles.map((file) => file.latestTime ?? 0),
@@ -267,14 +264,17 @@ export function ContextPanel({
           <section className="context-panel__usage">
             <SectionHeading title={t("context.windowTitle")} meta={t("context.windowSubtitle")} />
             <div className="context-panel__usage-visual">
-              <div className="context-panel__donut" style={donutStyle}>
-                <div className="context-panel__donut-core">
-                  <strong>{fmtTokens(usedTokens)}</strong>
-                  <span>/ {fmtTokens(windowTokens)} tokens</span>
-                </div>
+              <div className="context-panel__curve-bar">
+                <div className="context-panel__curve-segment context-panel__curve-segment--prompt" style={{ width: `${breakdown.promptPct}%` }} />
+                <div className="context-panel__curve-segment context-panel__curve-segment--completion" style={{ width: `${breakdown.completionPct - breakdown.promptPct}%` }} />
+                <div className="context-panel__curve-segment context-panel__curve-segment--reasoning" style={{ width: `${breakdown.reasoningPct - breakdown.completionPct}%` }} />
+                <div className="context-panel__curve-segment context-panel__curve-segment--other" style={{ width: `${breakdown.otherPct - breakdown.reasoningPct}%` }} />
               </div>
-              <div className="context-panel__percent">{usagePct}%</div>
-            </div>
+              <div className="context-panel__curve-info">
+                <strong>{fmtTokens(usedTokens)}</strong>
+                <span>/ {fmtTokens(windowTokens)} tokens · {usagePct}%</span>
+              </div>
+              </div>
             <div className="context-panel__breakdown">
               <TokenLegend label={t("context.prompt")} value={breakdown.promptTokens} color="prompt" />
               <TokenLegend label={t("context.completion")} value={breakdown.completionTokens} color="completion" />

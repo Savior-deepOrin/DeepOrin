@@ -279,11 +279,9 @@ func (a *App) startup(ctx context.Context) {
 	}
 
 	// Extract embedded skills on first launch
-	go func() {
-		if err := extractEmbeddedSkills(); err != nil {
-			log.Printf("extract embedded skills: %v", err)
-		}
-	}()
+	if err := extractEmbeddedSkills(); err != nil {
+		log.Printf("extract embedded skills: %v", err)
+	}
 	go a.restoreOrBuildTabs()
 	a.goSafe("refreshBotRuntime", a.refreshBotRuntime)
 	a.goSafe("sendStartupPing", a.sendStartupPing)
@@ -4666,15 +4664,6 @@ func (a *App) ConnectVisionKey(apiKey string) error {
 // on first launch and registers the path in config so they are auto-discovered.
 func extractEmbeddedSkills() error {
 	dest := filepath.Join(filepath.Dir(config.UserConfigPath()), "skills")
-	if _, err := os.Stat(dest); err == nil {
-		return nil
-	}
-	if err := os.CopyFS(dest, embeddedSkillsFS); err != nil {
-		return err
-	}
-	cfg, err := config.Load()
-	if err != nil {
-		return err
-	}
-	return cfg.AddSkillPath(dest)
+	if _, err := os.Stat(dest); err == nil { return nil }
+	return os.CopyFS(dest, embeddedSkillsFS)
 }

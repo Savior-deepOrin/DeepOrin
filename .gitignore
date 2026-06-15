@@ -60,3 +60,4 @@ Thumbs.db
 benchmarks/context-maintenance-e2e/run/
 *.exe
 *.exe
+my/

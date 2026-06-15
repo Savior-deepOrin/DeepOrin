@@ -128,7 +128,7 @@ func (c *Config) UIShortcutLayout() string {
 
 func normalizeThemeStyle(style string) string {
 	switch strings.ToLower(strings.TrimSpace(style)) {
-	case "graphite", "aurora", "slate", "carbon", "nocturne", "amber", "ember", "midnight", "sandstone", "porcelain", "linen", "glacier":
+	case "graphite", "aurora", "slate", "carbon", "nocturne", "amber", "cyber", "ember", "midnight", "sandstone", "porcelain", "linen", "glacier":
 		return strings.ToLower(strings.TrimSpace(style))
 	default:
 		return ""
@@ -625,6 +625,11 @@ type SkillsConfig struct {
 // expanded; empty entries are dropped.
 func (c *Config) SkillCustomPaths() []string {
 	var out []string
+	// Always include the built-in user skills directory
+	userSkillsDir := filepath.Join(filepath.Dir(UserConfigPath()), "skills")
+	if _, err := os.Stat(userSkillsDir); err == nil {
+		out = append(out, userSkillsDir)
+	}
 	for _, p := range c.Skills.Paths {
 		if p = ExpandVars(p); strings.TrimSpace(p) != "" {
 			out = append(out, p)

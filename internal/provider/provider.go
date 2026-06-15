@@ -298,11 +298,17 @@ func (p *Pricing) Cost(u *Usage) float64 {
 	if p == nil || u == nil {
 		return 0
 	}
-	return (float64(u.CacheHitTokens)*p.CacheHit +
-		float64(u.CacheMissTokens)*p.Input +
+	hit := u.CacheHitTokens
+	miss := u.CacheMissTokens
+	if hit+miss == 0 && u.PromptTokens > 0 {
+		miss = u.PromptTokens
+	} else if miss == 0 && hit > 0 && u.PromptTokens > hit {
+		miss = u.PromptTokens - hit
+	}
+	return (float64(hit)*p.CacheHit +
+		float64(miss)*p.Input +
 		float64(u.CompletionTokens)*p.Output) / 1e6
 }
-
 // Symbol returns the currency display symbol, defaulting to "¥".
 func (p *Pricing) Symbol() string {
 	if p == nil || p.Currency == "" {
