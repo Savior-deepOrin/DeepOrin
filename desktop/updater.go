@@ -37,7 +37,7 @@ import (
 // the canary line and a stable build polls latest; the two never cross.
 const (
 	r2Base         = ""
-	ghReleasesBase = "https://github.com/Savior-deepOrin/deeporin/releases"
+	ghReleasesBase = "https://github.com/Savior-deepOrin/DeepOrin/releases"
 	httpTimeout    = 15 * time.Second
 )
 
